@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <!-- Profile Information -->
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h1 class="h4 mb-0">Profile</h1>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {{ form.hidden_tag() }}
+                        <div class="mb-3">
+                            {{ form.username.label(class="form-label") }}
+                            {{ form.username(class="form-control") }}
+                            {% for error in form.username.errors %}
+                                <span class="text-danger">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.email.label(class="form-label") }}
+                            {{ form.email(class="form-control") }}
+                            {% for error in form.email.errors %}
+                                <span class="text-danger">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.current_password.label(class="form-label") }}
+                            {{ form.current_password(class="form-control") }}
+                            {% for error in form.current_password.errors %}
+                                <span class="text-danger">{{ error }}</span>
+                            {% endfor %}
+                            <div class="form-text">Required to save changes</div>
+                        </div>
+                        {{ form.submit(class="btn btn-primary") }}
+                    </form>
+                </div>
+            </div>
+
+
+        <!-- Profile Summary -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4 class="h5 mb-0">Account Summary</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2">
+                            <strong>Role:</strong> 
+                            <span class="badge bg-{{ 'primary' if current_user.role == 'admin' else 'info' if current_user.role == 'instructor' else 'secondary' }}">
+                                {{ current_user.role|title }}
+                            </span>
+                        </li>
+                        <li class="mb-2">
+                            <strong>Member since:</strong><br>
+                            {{ current_user.created_at.strftime('%B %d, %Y') }}
+                        </li>
+                        <li class="mb-2">
+                            <strong>Enrolled books:</strong><br>
+                            {{ current_user.enrolled_courses|length }}
+                        </li>
+                        {% if current_user.role in ['admin', 'instructor'] %}
+                        <li>
+                            <strong>Created books:</strong><br>
+                            {{ current_user.created_courses|length }}
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
