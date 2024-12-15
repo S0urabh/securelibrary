@@ -41,7 +41,7 @@ python wsgi.py
 
 2. Open your browser and navigate to:
 ```
-http://localhost:5000
+http://localhost:5001
 ```
 
 3. Log in with the admin credentials created above.
